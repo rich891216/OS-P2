@@ -126,6 +126,8 @@ static int (*syscalls[])(void) = {
 [SYS_link]    sys_link,
 [SYS_mkdir]   sys_mkdir,
 [SYS_close]   sys_close,
+[SYS_getnumsyscalls]	sys_getnumsyscalls,
+[SYS_getnumsyscallsgood] sys_getnumsyscallsgood,
 };
 
 void
@@ -137,7 +139,7 @@ syscall(void)
   num = curproc->tf->eax;
   if(num > 0 && num < NELEM(syscalls) && syscalls[num]) {
     curproc->tf->eax = syscalls[num]();
-    if(num != 1 && num != 7 && num != 12) {
+    if(num != 1 && num != 7 && num != 12 && num != 22 && num != 23) {
       if(curproc->tf->eax != -1){
         curproc->numsyscalls++;
       } else {

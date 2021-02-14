@@ -1,25 +1,11 @@
+#include "types.h"
+#include "stat.h"
+#include "user.h"
 int main(int argc, char *argv[]) {
     if (argc != 2) {
-        printf("getnumsyscallsgood: invalid command line\n");
-        exit(1);
+        printf(2, "getnumsyscallsgood: invalid command line\n");
+        exit();
     }
     int pid = atoi(argv[1]);
-    return getnumsyscalls(pid);
-}
-
-int getnumsyscallsgood(int pid) {
-    if (isvalidpid(pid) == 0) {
-        return -1;
-    }
-    int count = 0;
-}
-
-int isvalidpid(int pid) {
-    if (kill(pid, 0) != 0) {
-        // process doesn't exist
-        return 0;
-    } else {
-        // process exists
-        return 1;
-    }
+    return getnumsyscallsgood(pid);
 }

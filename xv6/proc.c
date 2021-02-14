@@ -111,7 +111,8 @@ found:
   p->context = (struct context*)sp;
   memset(p->context, 0, sizeof *p->context);
   p->context->eip = (uint)forkret;
-
+  p->numsyscalls = 0;
+  p->numsyscallsgood = 0;
   return p;
 }
 
@@ -531,4 +532,34 @@ procdump(void)
     }
     cprintf("\n");
   }
+}
+int
+getnumsyscalls(int pid)
+{
+  struct proc *p;
+
+  acquire(&ptable.lock);
+  for(p = ptable.proc; p < &ptable.proc[NPROC]; p++){
+    if(p->pid == pid){
+      release(&ptable.lock);
+      return p->numsyscalls;
+    }
+  }
+  release(&ptable.lock);
+  return -1;
+}
+int
+getnumsyscallsgood(int pid)
+{
+  struct proc *p;
+
+  acquire(&ptable.lock);
+  for(p = ptable.proc; p < &ptable.proc[NPROC]; p++){
+    if(p->pid == pid){
+      release(&ptable.lock);
+      return p->numsyscallsgood;
+    }
+  }
+  release(&ptable.lock);
+  return -1;
 }

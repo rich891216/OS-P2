@@ -142,11 +142,10 @@ syscall(void)
   if(num > 0 && num < NELEM(syscalls) && syscalls[num]) {
     curproc->tf->eax = syscalls[num]();
     if(num != 1 && num != 7 && num != 12 && num != 22 && num != 23) {
+      curproc->numsyscalls++;
       if(curproc->tf->eax != -1){
-        curproc->numsyscalls++;
-      } else {
-        curproc->numsyscalls++;
-	curproc->numsyscallsgood++;
+        // syscall unsuccessful, but complete
+        curproc->numsyscallsgood++;
       }
     }   
   } else {

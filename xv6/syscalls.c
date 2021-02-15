@@ -15,20 +15,19 @@ int main(int argc, char *argv[]) {
         printf(2, "N and g must be >= 1\n");
         exit();
     }
-int mypid = getpid();
+    int mypid = getpid();
 
-// TODO:
-// loop to call N completed system calls and
-// g successfully completed system calls
-for(int i = 1; i < N; i++) {
-    if(i <= g) {
-        kill(-1);
-    } else {
-        getpid();
+    // loop to call N completed system calls and
+    // g successfully completed system calls
+    for(int i = 2; i <= N; i++) {
+        if(i <= g) {
+            getpid();
+        } else {
+            kill(-1);
+        }
     }
-}
 
-printf(1, "%d %d\n", getnumsyscalls(mypid), getnumsyscallsgood(mypid));
+    printf(2, "%d %d\n", getnumsyscalls(mypid), getnumsyscallsgood(mypid));
     
-return 0;
+    return 0;
 }
